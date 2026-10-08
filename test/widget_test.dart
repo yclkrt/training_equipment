@@ -1,30 +1,26 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:training_equipment/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Boxing timer açılış ekranı çiziliyor', (tester) async {
+    await tester.pumpWidget(const ProviderScope(child: BoxingTimerApp()));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('BOXING TIMER'), findsOneWidget);
+    expect(find.text('BAŞLA'), findsOneWidget);
+    expect(find.text('Raund Sayısı'), findsOneWidget);
+    expect(find.text('Raund Süresi'), findsOneWidget);
+    expect(find.text('Dinlenme Süresi'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('BAŞLA butonuna basınca timer çalışıyor', (tester) async {
+    await tester.pumpWidget(const ProviderScope(child: BoxingTimerApp()));
+
+    await tester.tap(find.text('BAŞLA'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('DURAKLAT'), findsOneWidget);
+    expect(find.text('DÖVÜŞ'), findsOneWidget);
   });
 }
